@@ -1,17 +1,17 @@
 // Module 01 Homework: First Node.js Script
 // Complete the TODOs below to create your first Node.js program
 
-// TODO: Print "Hello, Backend Development!" to the console
+// FIXED: Print "Hello, Backend Development!" to the console
 console.log("Hello, Backend Development!")
 
-// TODO: Create a variable called 'name' with your name, then print a message like "My name is [your name]"
+// FIXED: Create a variable called 'name' with your name, then print a message like "My name is [your name]"
 const name = "alan"
 console.log(`My name is ${name}`)
-// TODO: Create a variable called 'today' that gets the current date using new Date(), then print it
+// FIXED: Create a variable called 'today' that gets the current date using new Date(), then print it
 let today = new Date()
 console.log(today)
 
-// TODO: Perform a calculation (any math operation you want) and print the result
+// FIXED: Perform a calculation (any math operation you want) and print the result
 // Example: Calculate 5 + 3 * 2, store it in a variable, and print it
 
 const number = 5 + 3 * 2
