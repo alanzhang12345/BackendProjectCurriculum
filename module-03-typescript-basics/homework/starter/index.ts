@@ -2,10 +2,11 @@
 // Add TypeScript type annotations throughout this file
 
 // TODO: Import the Task and TaskManager interfaces from types.ts
-// import { Task, TaskManager } from './types';
+
+import { Task, TaskManager } from './types';
 
 // TODO: Add type annotation to the manager object
-const manager = {
+const manager: {tasks: Task[], nextId: number} = {
   tasks: [],
   nextId: 1,
 };
@@ -16,8 +17,8 @@ const manager = {
 
 // TODO: Add type annotations to parameters and return type
 // Should return a Task object
-function createTask(title) {
-  const task = {
+function createTask(title: string): Task {
+  const task: {id: number, title: string, completed: boolean, createdAt: string} = {
     id: manager.nextId++,
     title: title,
     completed: false,
@@ -29,20 +30,20 @@ function createTask(title) {
 
 // TODO: Add return type annotation
 // Should return an array of Task objects
-function getTasks() {
+function getTasks(): Task[] {
   return manager.tasks;
 }
 
 // TODO: Add type annotations
 // Should return Task | null (null if not found)
-function getTaskById(id) {
+function getTaskById(id: number): Task | null {
   const task = manager.tasks.find((t) => t.id === id);
   return task || null;
 }
 
 // TODO: Add type annotations
 // Should return boolean (true if task was found and updated)
-function updateTask(id, updates) {
+function updateTask(id: number, updates: Task): boolean {
   const task = getTaskById(id);
   if (!task) {
     return false;
@@ -64,7 +65,7 @@ function updateTask(id, updates) {
 
 // TODO: Add type annotations
 // Should return boolean (true if task was found and deleted)
-function deleteTask(id) {
+function deleteTask(id: number): boolean {
   const index = manager.tasks.findIndex((t) => t.id === id);
   if (index === -1) {
     return false;
@@ -75,7 +76,7 @@ function deleteTask(id) {
 
 // TODO: Add type annotations
 // Should return boolean (true if task was found and toggled)
-function toggleComplete(id) {
+function toggleComplete(id: number): boolean {
   const task = getTaskById(id);
   if (!task) {
     return false;
@@ -99,38 +100,38 @@ function toggleComplete(id) {
 
 // TODO: Add type annotations
 // Should take an array of Task objects and return an array of Task objects
-function getCompletedTasks(tasks) {
+function getCompletedTasks(tasks: Task[]): Task[] {
   return tasks.filter((task) => task.completed);
 }
 
 // TODO: Add type annotations
 // Should take an array of Task objects and return an array of Task objects
-function getPendingTasks(tasks) {
+function getPendingTasks(tasks: Task[]): Task[] {
   return tasks.filter((task) => !task.completed);
 }
 
 // TODO: Add type annotations
 // Should take an array of Task objects and return a number
-function countCompleted(tasks) {
+function countCompleted(tasks: Task[]): number {
   return tasks.filter((task) => task.completed).length;
 }
 
 // TODO: Add type annotations
 // Should take an array of Task objects and return a number
-function countPending(tasks) {
+function countPending(tasks: Task[]): number {
   return tasks.filter((task) => !task.completed).length;
 }
 
 // TODO: Add type annotations
 // Should take a Task object and return a string
-function formatTask(task) {
+function formatTask(task: Task): string {
   const status = task.completed ? "✓" : " ";
   return `[${status}] ${task.id}. ${task.title}`;
 }
 
 // TODO: Add type annotations
 // Should take an array of Task objects and return void (prints to console)
-function printTasks(tasks) {
+function printTasks(tasks: Task[]): void {
   if (tasks.length === 0) {
     console.log("  No tasks");
     return;
@@ -171,7 +172,12 @@ function runDemo() {
 
   // Update a task
   console.log("\nUpdating task 2...");
-  updateTask(2, { title: "Review ALL TypeScript lessons" });
+  updateTask(2, { 
+    title: "Review ALL TypeScript lessons", 
+    id: 1,
+    completed: true,
+    createdAt: "2025 november 2",
+  });
 
   console.log("\nAll tasks after update:");
   printTasks(getTasks());

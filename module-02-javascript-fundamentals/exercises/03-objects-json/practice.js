@@ -13,6 +13,12 @@ const fs = require('fs');
 // Returns: { name: "Maya", age: 14, sport: "soccer", level: "beginner" }
 const createStudent = (name, age, sport, level) => {
   // Your code here
+  return {
+    name: name,
+    age: age, 
+    sport: sport,
+    level: level,
+  }
 };
 
 // TODO: Create a function that gets a student's full info as a string
@@ -202,7 +208,7 @@ const createReportCard = (student) => {
 // TEST YOUR FUNCTIONS
 // ========================================
 
-/*
+
 console.log('=== Object Basics ===');
 const maya = createStudent("Maya", 14, "soccer", "beginner");
 console.log('Created student:', maya);
@@ -258,4 +264,4 @@ const reportData = {
   skillLevel: 4
 };
 console.log('Report card:', createReportCard(reportData));
-*/
+

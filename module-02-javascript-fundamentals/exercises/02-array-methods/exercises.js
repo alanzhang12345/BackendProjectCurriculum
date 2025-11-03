@@ -29,12 +29,14 @@ const products = [
 // Expected: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
 const doubleNumbers = (nums) => {
   // Your code here
+  return nums.map(x => x * 2)
 };
 
 // TODO: Use map to get just the student names
 // Expected: ['Alex', 'Jordan', 'Casey', 'Taylor', 'Morgan']
 const getStudentNames = (students) => {
   // Your code here
+  return students.map(x => x.name)
 };
 
 // TODO: Use map to add 5 bonus points to each grade
@@ -51,16 +53,19 @@ const addBonusPoints = (students) => {
 // Expected: [2, 4, 6, 8, 10]
 const getEvenNumbers = (nums) => {
   // Your code here
+  return nums.filter(x => x  % 2 === 0) 
 };
 
 // TODO: Use filter to get only passing students (passed === true)
 const getPassingStudents = (students) => {
   // Your code here
+  return students.filter(student => student.passed === true)
 };
 
 // TODO: Use filter to get only products in stock
 const getInStockProducts = (products) => {
   // Your code here
+  return products.filter(product => product.instock === true)
 };
 
 // TODO: Use filter to get students with grade >= 80
@@ -101,11 +106,13 @@ const calculateTotalPrice = (products) => {
 // TODO: Use find to get the first number greater than 5
 const findFirstLarge = (nums) => {
   // Your code here
+  return nums.find(num => num > 5)
 };
 
 // TODO: Use find to get the student named 'Jordan'
 const findJordan = (students) => {
   // Your code here
+  return students.find(student => student.name === "Jordan")
 };
 
 // TODO: Use find to get the first product that costs more than $50
@@ -161,7 +168,7 @@ const sortByPrice = (products) => {
 // TEST YOUR FUNCTIONS
 // ========================================
 
-/*
+
 console.log('=== MAP ===');
 console.log('Double numbers:', doubleNumbers(numbers));
 console.log('Student names:', getStudentNames(students));
@@ -193,4 +200,4 @@ console.log('\n=== BONUS ===');
 console.log('Any failed:', anyFailed(students));
 console.log('All in stock:', allInStock(products));
 console.log('Sorted by price:', sortByPrice(products));
-*/
+
