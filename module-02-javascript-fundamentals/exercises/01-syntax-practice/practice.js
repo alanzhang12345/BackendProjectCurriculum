@@ -20,7 +20,7 @@ const greet = (name, age) => {
 // TODO: Create a function that calculates the area of a rectangle
 const calculateArea = (width, height) => {
   // Your code here
-  console.log(width * height) 
+  return (width * height) 
 };
 calculateArea(5, 10)
 
@@ -56,11 +56,22 @@ const getLetterGrade = (percentage) => {
 // Return "even" or "odd"
 const evenOrOdd = (number) => {
   // Your code here
+  if (number % 2 === 0) {
+      return "even"
+  } else {
+    return "odd"
+  }
+    
 };
 
 // TODO: Create a function that returns the larger of two numbers
 const max = (a, b) => {
   // Your code here
+  if (a > b) {
+    return a
+  } else {
+    return b
+  }
 };
 
 // ========================================
@@ -70,16 +81,29 @@ const max = (a, b) => {
 // TODO: Create a function that returns the sum of all numbers in an array
 const sumArray = (numbers) => {
   // Your code here
+  let sum = 0
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  return sum
 };
 
 // TODO: Create a function that returns the count of positive numbers in an array
 const countPositive = (numbers) => {
   // Your code here
+  let count = 0
+  for (let i = 0; i < numbers.length; i++)
+    if (numbers[i] >= 0) {
+      count += 1
+    }
+  return count
 };
 
 // TODO: Create a function that returns an array of all even numbers from the input
 const filterEven = (numbers) => {
   // Your code here
+  const evennumbers = numbers.filter(numbers => numbers % 2 === 0)
+  return evennumbers
 };
 
 // ========================================
@@ -90,18 +114,31 @@ const filterEven = (numbers) => {
 // Example: capitalize("hello") should return "Hello"
 const capitalize = (str) => {
   // Your code here
+  return str.substring(0,1).toUpperCase() + str.substring(1)
 };
 
 // TODO: Create a function that counts how many times a letter appears in a string
 // Example: countLetter("hello", "l") should return 2
 const countLetter = (str, letter) => {
   // Your code here
+  let count = 0
+  for(let i = 0; i < str.length; i++) {
+    if(str[i] === letter) {
+      count += 1
+    }
+  }
+  return count
 };
 
 // TODO: Create a function that reverses a string
 // Example: reverseString("hello") should return "olleh"
 const reverseString = (str) => {
   // Your code here
+  let newstr = ""
+  for(let i = str.length - 1; i >= 0; i--) {
+    newstr += str[i]
+  }
+  return newstr
 };
 
 // ========================================
@@ -111,19 +148,36 @@ const reverseString = (str) => {
 // TODO: Create a function that returns the first element of an array
 // Return undefined if array is empty
 const getFirstElement = (arr) => {
-  // Your code here
+  // Your code here 
+  if (arr.length > 0) {
+    return arr[0]
+  } else {
+    return "undefined"
+  }
 };
 
 // TODO: Create a function that returns the last element of an array
 // Return undefined if array is empty
 const getLastElement = (arr) => {
   // Your code here
+  if (arr.length > 0) {
+    return arr[arr.length - 1]
+  } else {
+    return "undefined"
+  }
 };
 
 // TODO: Create a function that checks if an array contains a specific value
 // Return true or false
 const arrayContains = (arr, value) => {
-  // Your code here
+  // Your code here 
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === value) {
+      return "true"
+    } else {
+      return false
+    }
+  }
 };
 
 // ========================================

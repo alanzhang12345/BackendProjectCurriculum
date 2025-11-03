@@ -6,15 +6,15 @@
 
 // TODO: Add parameter and return type annotations to these functions
 
-function addNumbers(a, b) {
+function addNumbers(a: number, b: number):number {
   return a + b;
 }
 
-function multiplyNumbers(a, b) {
+function multiplyNumbers(a: number, b: number) {
   return a * b;
 }
 
-function greetStudent(name) {
+function greetStudent(name: string) {
   return `Hello, ${name}! Welcome to class.`;
 }
 
@@ -31,11 +31,11 @@ console.log(greetStudent("Jordan"));
 // TODO: Add type annotations to these functions that don't return anything
 // Use 'void' as the return type
 
-function logMessage(message) {
+function logMessage(message: string):void {
   console.log(`[LOG] ${message}`);
 }
 
-function printStudentInfo(name, age, grade) {
+function printStudentInfo(name:string, age:number, grade:number):void {
   console.log(`Student: ${name}`);
   console.log(`  Age: ${age}`);
   console.log(`  Grade: ${grade}`);
@@ -52,7 +52,7 @@ printStudentInfo("Alex", 14, 8);
 
 // TODO: Add type annotations
 // Make 'title' an optional parameter (use ?)
-function formatName(firstName, lastName, title) {
+function formatName(firstName:string, lastName:string, title?: string) {
   if (title) {
     return `${title} ${firstName} ${lastName}`;
   }
@@ -61,7 +61,7 @@ function formatName(firstName, lastName, title) {
 
 // TODO: Add type annotations
 // Make 'message' an optional parameter
-function sendNotification(userId, message) {
+function sendNotification(userId: number, message?:string) {
   if (message) {
     console.log(`Notification to user ${userId}: ${message}`);
   } else {
@@ -81,13 +81,13 @@ sendNotification(102);
 
 // TODO: Add type annotations
 // Give 'taxRate' a default value of 0.08
-function calculateTotal(price, taxRate) {
+function calculateTotal(price:number, taxRate: number = 0.08): number {
   return price * (1 + taxRate);
 }
 
 // TODO: Add type annotations
 // Give 'prefix' a default value of "Student"
-function generateId(number, prefix) {
+function generateId(number:number, prefix: string = "Student") {
   return `${prefix}-${number}`;
 }
 
@@ -103,20 +103,20 @@ console.log(generateId(2001, "INSTRUCTOR"));
 
 // TODO: Add type annotations
 // Parameter should be an array of numbers
-function calculateAverage(numbers) {
+function calculateAverage(numbers:number[]) {
   const sum = numbers.reduce((acc, num) => acc + num, 0);
   return sum / numbers.length;
 }
 
 // TODO: Add type annotations
 // Parameter should be an array of strings
-function countNames(names) {
+function countNames(names:string[]) {
   return names.length;
 }
 
 // TODO: Add type annotations
 // Should take an array of numbers and return a number
-function findMax(numbers) {
+function findMax(numbers:number[]):number {
   return Math.max(...numbers);
 }
 

@@ -2,6 +2,7 @@
 // Complete all TODO sections
 
 const fs = require('fs');
+const { first } = require('rxjs');
 
 // ========================================
 // 1. Object Basics
@@ -26,6 +27,7 @@ const createStudent = (name, age, sport, level) => {
 // Example: "Maya is 14 years old and plays soccer at beginner level"
 const getStudentInfo = (student) => {
   // Your code here
+  return `${student.name} is ${student.age} years old and plays ${student.sport} at a ${student.level} level`
 };
 
 // TODO: Create a function that updates a student's level
@@ -33,6 +35,9 @@ const getStudentInfo = (student) => {
 // Hint: Use the spread operator (...)
 const updateLevel = (student, newLevel) => {
   // Your code here
+  const newStudent = {...student} 
+  newStudent.level = newLevel
+  return newStudent
 };
 
 // ========================================
@@ -43,7 +48,8 @@ const updateLevel = (student, newLevel) => {
 // Return a string: "Name plays Sport"
 // Example: { name: "Alex", sport: "basketball" } -> "Alex plays basketball"
 const getNameAndSport = (student) => {
-  // Your code here - use destructuring!
+  // Your code here - use destructuring! 
+  return `${student.name} plays ${student.sport}`
 };
 
 // TODO: Use destructuring with default values
@@ -51,6 +57,9 @@ const getNameAndSport = (student) => {
 // Return an object with just those two properties
 const getNameAndLevel = (student) => {
   // Your code here - use destructuring with defaults!
+  const newStudent = {} 
+  newStudent.name = student.name
+  newStudent.level = student.level ? student.level : "beginner"
 };
 
 // TODO: Use nested destructuring to get the instructor's name from a class object
@@ -58,6 +67,7 @@ const getNameAndLevel = (student) => {
 // Return: "Coach Lee"
 const getInstructorName = (classObj) => {
   // Your code here - use nested destructuring!
+  return classObj.instructor.name
 };
 
 // ========================================
@@ -68,12 +78,25 @@ const getInstructorName = (classObj) => {
 // Return them as an object: { first: student1, second: student2 }
 const getFirstTwo = (students) => {
   // Your code here - use array destructuring!
+  if (students.length >= 2) {
+    return {
+      first: students[0].name,
+      second: students[1].name,
+    }
+  } else {
+    return null
+  }
 };
 
 // TODO: Use rest operator to get the first student and all the rest
 // Return: { first: student1, rest: [all other students] }
 const getFirstAndRest = (students) => {
   // Your code here - use array destructuring with rest!
+  const [first, ...rest] = students 
+  return {
+    first: first, 
+    rest: rest,
+  }
 };
 
 // ========================================
@@ -85,17 +108,21 @@ const getFirstAndRest = (students) => {
 const loadData = () => {
   // Your code here
   // Hint: Use fs.readFileSync() and JSON.parse()
+  const content = fs.readFileSync('data.json') 
+  return JSON.parse(content)
 };
 
 // TODO: Convert a student object to a JSON string
 // Use 2 spaces for indentation to make it readable
 const studentToJSON = (student) => {
   // Your code here - use JSON.stringify()
+  JSON.stringify(student, null, "  ")
 };
 
 // TODO: Parse a JSON string and return the object
 const parseStudent = (jsonString) => {
   // Your code here - use JSON.parse()
+  return JSON.parse(jsonString)
 };
 
 // ========================================
@@ -106,12 +133,14 @@ const parseStudent = (jsonString) => {
 // Return them as an array
 const getStudentProperties = (student) => {
   // Your code here - use Object.keys()
+  return Object.keys(student)
 };
 
 // TODO: Get all the values from a student object
 // Return them as an array
 const getStudentValues = (student) => {
   // Your code here - use Object.values()
+  return Object.values(student)
 };
 
 // TODO: Merge two student objects into one
@@ -119,6 +148,7 @@ const getStudentValues = (student) => {
 // Return a new object (don't modify the originals)
 const mergeStudents = (student1, student2) => {
   // Your code here - use spread operator or Object.assign()
+  return Object.assign({}, student1, student2)
 };
 
 // ========================================
@@ -131,6 +161,9 @@ const getAllStudentNames = () => {
   // Your code here
   // 1. Load and parse the JSON
   // 2. Map over students to get names
+  const data = fs.readFileSync('data.json')
+  const students = JSON.parse(data).students
+  return students.map(x => x.name)
 };
 
 // TODO: Find a student by name from the data.json file
@@ -139,6 +172,9 @@ const findStudentByName = (name) => {
   // Your code here
   // 1. Load and parse the JSON
   // 2. Use find() to locate the student
+  const data = fs.readFileSync('data.json')
+  const students = JSON.parse(data).students
+  return students.find(x => x.name === name)
 };
 
 // TODO: Get all students enrolled in a specific class
@@ -148,6 +184,9 @@ const getStudentsInClass = (className) => {
   // 1. Load and parse the JSON
   // 2. Filter students by their enrolledClasses array
   // 3. Map to get just the names
+  const data = fs.readFileSync('data.json')
+  const students = JSON.parse(data).students
+  return students.filter(x => x.className === className).map(x => x.name)
 };
 
 // ========================================
@@ -159,6 +198,21 @@ const getStudentsInClass = (className) => {
 const getDataSummary = () => {
   // Your code here
   // Hint: Load data, count students/classes, get unique sports
+  const data = fs.readFileSync('data.json')
+  const students = JSON.parse(data).students
+  const totalStudents = students.length 
+  let countClasses = 0
+  countClasses = students.reduce((a,b) => a + b.enrolledClasses.length, 0)
+  let uniqueSports = [] 
+  for (let s of students) {
+    if (!uniqueSports.includes(s.primarySport))
+      uniqueSports.push(s.primarySport)
+  }
+  return {
+    totalStudents: totalStudents, 
+    totalClasses: countClasses,
+    sports: uniqueSports
+  }
 };
 
 // TODO: Get the average age of all students
@@ -169,6 +223,12 @@ const getAverageAge = () => {
   // 2. Map to ages
   // 3. Calculate average
   // 4. Round to 1 decimal
+  const data = fs.readFileSync('data.json')
+  const students = JSON.parse(data).students
+  const total = students.reduce((a,b) => a + b.age, 0)
+  const average = total / students.length 
+  const rounded = Math.round(average * 10) / 10
+  return rounded
 };
 
 // TODO: Group students by sport
@@ -177,6 +237,18 @@ const groupBySport = () => {
   // Your code here
   // 1. Load data
   // 2. Use reduce to group by primary sport
+  const data = fs.readFileSync('data.json')
+  const students = JSON.parse(data).students
+  const groups = {} 
+  for(let s of students) {
+    const primary = s.primarySport
+    if(!groups[primary]) {
+      groups[primary] = [s.name]
+    } else {
+      groups[primary].push[s.name]
+    }
+  } 
+  return groups
 };
 
 // ========================================
@@ -192,6 +264,11 @@ const addStudent = (studentData) => {
   // 3. Convert back to JSON
   // 4. Write to file using fs.writeFileSync()
   // Note: Be careful with this in real code - it modifies the file!
+  const data = fs.readFileSync('data.json')
+  const students = JSON.parse(data).students
+  students.push(studentData)
+  const content = JSON.stringify(students) 
+  //fs.writeFileSync(content)
 };
 
 // TODO: Create a student report card object
@@ -202,6 +279,16 @@ const addStudent = (studentData) => {
 // Feedback: passed ? "Great job!" : "Keep practicing!"
 const createReportCard = (student) => {
   // Your code here - use destructuring and object creation
+  const grade = student.attendanceRate >= 80 && student.skillLevel >= 3 ? "A" : "B"
+  const passed = grade === "A" || grade === "B"
+  const feedback = passed ? "Great job!" : "Keep practicing!"
+  return {
+    name: student.name,
+    sport: student.sport,
+    grade: grade,
+    passed: passed,
+    feedback: feedback
+  }
 };
 
 // ========================================

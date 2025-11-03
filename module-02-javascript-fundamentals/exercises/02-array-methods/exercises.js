@@ -43,6 +43,12 @@ const getStudentNames = (students) => {
 // Return an array of objects with updated grades
 const addBonusPoints = (students) => {
   // Your code here
+
+  return students.map(x => {
+    const y = { ...x }
+    y.grade = x.grade + 5
+    return y
+  })
 };
 
 // ========================================
@@ -65,12 +71,13 @@ const getPassingStudents = (students) => {
 // TODO: Use filter to get only products in stock
 const getInStockProducts = (products) => {
   // Your code here
-  return products.filter(product => product.instock === true)
+  return products.filter(product => product.inStock === true)
 };
 
 // TODO: Use filter to get students with grade >= 80
 const getHighGrades = (students) => {
   // Your code here
+  return students.filter(x => x.grade >= 80)
 };
 
 // ========================================
@@ -80,23 +87,32 @@ const getHighGrades = (students) => {
 // TODO: Use reduce to sum all numbers
 // Expected: 55 (1+2+3+...+10)
 const sumNumbers = (nums) => {
-  // Your code here
+  // Your code here 
+  return nums.reduce((a,b) => a + b, 0)
 };
 
 // TODO: Use reduce to find the maximum number
 const findMax = (nums) => {
   // Your code here
+  return nums.reduce((a,b) => Math.max(a,b), nums.MIN_SAFE_INTEGER)
 };
 
 // TODO: Use reduce to count how many students passed
 // Expected: 4
 const countPassing = (students) => {
   // Your code here
+  return students.reduce((a,b) => {
+    if(b.passed === true) {
+      a++ 
+    }
+    return a
+  }, 0)
 };
 
 // TODO: Use reduce to calculate the total price of all products
 const calculateTotalPrice = (products) => {
   // Your code here
+  return products.reduce((a,b) => a + b.price, 0)
 };
 
 // ========================================
@@ -118,6 +134,7 @@ const findJordan = (students) => {
 // TODO: Use find to get the first product that costs more than $50
 const findExpensiveProduct = (products) => {
   // Your code here
+  return products.find(x => x.price >= 50)
 };
 
 // ========================================
@@ -128,18 +145,27 @@ const findExpensiveProduct = (products) => {
 // Hint: filter passing students, map to get grades, reduce to sum, then divide
 const averagePassingGrade = (students) => {
   // Your code here
+  const passedStudents = students.filter(student => student.passed === true)
+  if(passedStudents.length === 0) {
+    return 0
+  }
+  const total = passedStudents.reduce((a,b) => a + b.grade, 0)
+  return total / passedStudents.length
 };
 
 // TODO: Get total price of all in-stock sports products
 // Hint: filter by category and inStock, then reduce to sum prices
 const totalSportsInStock = (products) => {
   // Your code here
+  const inStock = products.filter(product => product.inStock === true)
+  return inStock.reduce((a,b) => a + b.price, 0)
 };
 
 // TODO: Get names of students under 16 years old who passed
 // Hint: filter by age and passed, then map to get names
 const youngPassingStudents = (students) => {
-  // Your code here
+  // Your code here 
+  return students.filter(s => s.age < 16 && s.passed === true).map(s => s.name)
 };
 
 // ========================================
@@ -150,18 +176,21 @@ const youngPassingStudents = (students) => {
 // Return true or false
 const anyFailed = (students) => {
   // Your code here
+  return students.some(s => s.passed === false)
 };
 
 // TODO: Use every() to check if all products are in stock
 // Return true or false
 const allInStock = (products) => {
   // Your code here
+  return products.every(p => p.inStock === true)
 };
 
 // TODO: Sort products by price (ascending)
 // Return a new sorted array (don't modify original)
 const sortByPrice = (products) => {
   // Your code here
+  return products.sort((a,b) => a.price - b.price)
 };
 
 // ========================================

@@ -13,20 +13,40 @@
 // - phoneNumber: string (OPTIONAL - use ? to make it optional)
 
 // Your interface here:
+interface user {
+  id: number,
+  firstName: string,
+  lastName: string,
+  email: string,
+  role: "student" | "parent" | "instructor" | "admin",
+  phoneNumber?: string,
+}
 
 // ==========================================
 // SECTION 2: Create User Objects
 // ==========================================
 
 // TODO: Create a student user object that matches the User interface
-const student = {
+const student: user = {
   // Fill in the properties
+  id: 2,
+  firstName: "Drake",
+  lastName: "Maye",
+  email: "student@email.com",
+  role: "student",
+  phoneNumber: "123",
 };
 
 // TODO: Create an instructor user object that matches the User interface
 // Include the optional phoneNumber for this one
 const instructor = {
   // Fill in the properties
+  id: 3,
+  firstName: "Micahel",
+  lastName: "yellow",
+  email: "email.com",
+  role: "instructor",
+  phoneNumber: "234"
 };
 
 console.log("=== Users ===");

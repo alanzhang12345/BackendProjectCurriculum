@@ -13,6 +13,13 @@ const path = require('path');
 // If negative, reject with "Negative numbers not allowed"
 const checkPositive = (num) => {
   // Your code here - return a new Promise
+  return new Promise((resolve, reject) => {
+    if (num >= 0) {
+      resolve(`positive: ${num}`)
+    } else {
+      reject('negative numbers not allowed')
+    }
+  })
 };
 
 // TODO: Create a delay function that resolves after a given number of milliseconds
@@ -21,12 +28,32 @@ const checkPositive = (num) => {
 const delay = (ms) => {
   // Your code here - return a Promise that resolves after ms milliseconds
   // Hint: Use setTimeout inside the Promise
+  return new Promise((resolve, reject) => {
+    let sucess = true
+    setTimeout(() => {
+      if (success) {
+      resolve() }
+      else {
+        reject("no timer")
+      }
+    }, ms)
+  }) 
 };
 
 // TODO: Create a function that simulates fetching user data
 // After 500ms, resolve with an object: { id, name, age }
 const fetchUser = (id) => {
   // Your code here - use delay and return user data
+  let success = true
+  return new Promise ((resolve, reject) => {
+    setTimeout(() => {
+      if(success) {
+      resolve({id :id, name: 'Alan', age: 15})
+      } else {
+        reject("user not found")
+      }
+    }, 500)
+  })
 };
 
 // ========================================
@@ -37,6 +64,9 @@ const fetchUser = (id) => {
 // Return "Success: {result}" if positive, "Error: {error}" if negative
 const handleCheckPositive = (num) => {
   // Your code here - use .then() and .catch()
+  checkPositive(num)
+    .then((result) => `success ${num}`)
+    .catch((error) => `error: ${error}`)
 };
 
 // TODO: Chain multiple Promises together
@@ -45,6 +75,10 @@ const handleCheckPositive = (num) => {
 // Use .then() chaining (not async/await)
 const getUserInfo = (id) => {
   // Your code here - use .then() chaining
+  fetchUser(id) 
+    .then((result) => `User ${result.name} is ${result.age} years old`)
+    .catch((error) => console.error("error:", error))
+
 };
 
 // ========================================
@@ -55,17 +89,39 @@ const getUserInfo = (id) => {
 // Use try/catch for error handling
 const handleCheckPositiveAsync = async (num) => {
   // Your code here - use async/await with try/catch
+  try {
+    let result = await checkPositive(num) 
+    return result
+  }
+  catch(error) {
+    console.error("error" , error)
+  }
 };
 
 // TODO: Convert getUserInfo to use async/await instead of .then()
 const getUserInfoAsync = async (id) => {
   // Your code here - use async/await
+  try {
+    let result = await getUserInfo(id)
+    return `User ${result.name} is ${result.age} years old`
+  }
+  catch(err) {
+    return `error: ${err}`
+  }
 };
 
 // TODO: Create an async function that waits 1 second then returns a greeting
 // Use the delay function you created earlier
 const asyncGreeting = async (name) => {
   // Your code here
+  try {
+    await delay(1000)
+    return "hello" + name
+  }
+  catch(e) {
+    return "error" + e
+  }
+  
 };
 
 // ========================================
