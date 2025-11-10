@@ -1,0 +1,2 @@
+GET https://geocoding-api.open-meteo.com/v1/search?name=London&count=1\
+GET https://geocoding-api.open-meteo.com/v1/search?name=London&count=1

@@ -5,17 +5,47 @@
 // TODO: Define a Post interface based on https://jsonplaceholder.typicode.com/posts/1
 interface Post {
   // Add properties here
+  userId: number,
+  id: number,
+  title: string,
+  body: string,
 }
 
 // TODO: Define a Comment interface based on https://jsonplaceholder.typicode.com/comments/1
 interface Comment {
   // Add properties here
+  postId: number,
+  id: number,
+  name: string,
+  email: string,
+  body: string,
 }
 
 // TODO: Define a User interface based on https://jsonplaceholder.typicode.com/users/1
 interface User {
   // Add properties here
   // Hint: User has nested objects for address and company
+  "id": number,
+  "name": string,
+  "username": string,
+  "email": string,
+  "address": {
+    "street": string,
+    "suite": string,
+    "city": string,
+    "zipcode": string,
+    "geo": {
+      "lat": string,
+      "lng": string
+    }
+  },
+  "phone": string,
+  "website": string,
+  "company": {
+    "name": string,
+    "catchPhrase":string,
+    "bs": string
+  }
 }
 
 // Part 2: Create the Client Class
@@ -28,49 +58,54 @@ class JsonPlaceholderClient {
 
   // TODO: Create a private helper method for making requests
   private async request<T>(endpoint: string): Promise<T> {
-    // This method should:
+    // This method should: 
     // 1. Build the full URL (baseURL + endpoint)
     // 2. Make the fetch request
     // 3. Check if response.ok
     // 4. If not ok, throw an error
     // 5. Parse and return JSON
-    throw new Error('Not implemented');
+    let fullURL = this.baseURL + endpoint
+    let res = await fetch(fullURL) 
+    if(!res.ok) {
+      throw new Error(res.status.toString())
+    }
+    return await res.json()
   }
 
   // TODO: Create method to get all posts
   async getAllPosts(): Promise<Post[]> {
     // Use this.request() to fetch /posts
-    throw new Error('Not implemented');
+    return this.request<Post[]>("/posts")
   }
 
   // TODO: Create method to get one post
   async getPost(id: number): Promise<Post> {
     // Use this.request() to fetch /posts/:id
-    throw new Error('Not implemented');
+    return this.request<Post>(`/posts/${id}`)
   }
 
   // TODO: Create method to get posts by user
   async getPostsByUser(userId: number): Promise<Post[]> {
     // Use this.request() to fetch /posts?userId=:userId
-    throw new Error('Not implemented');
+    return this.request<Post[]>(`/posts?userId=${userId}`)
   }
 
   // TODO: Create method to get comments for a post
   async getCommentsForPost(postId: number): Promise<Comment[]> {
     // Use this.request() to fetch /posts/:id/comments
-    throw new Error('Not implemented');
+    return this.request<Comment[]>(`/posts/${postId}/comments`)
   }
 
   // TODO: Create method to get all users
   async getAllUsers(): Promise<User[]> {
     // Use this.request() to fetch /users
-    throw new Error('Not implemented');
+    return this.request<User[]>("/users")
   }
 
   // TODO: Create method to get one user
   async getUser(id: number): Promise<User> {
     // Use this.request() to fetch /users/:id
-    throw new Error('Not implemented');
+    return this.request<User>(`/posts/${id}`)
   }
 }
 

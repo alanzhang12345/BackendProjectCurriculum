@@ -36,7 +36,11 @@ class WeatherClient {
     // 5. Return the parsed data
     //
     // Hint: Use async/await and try/catch for error handling
-    throw new Error('Not implemented');
+    let response = await fetch(url) 
+    if (!response.ok) {
+      throw new Error(response.status.toString())
+    }
+    return response.json() as Promise<T>
   }
 
   /**
@@ -62,7 +66,22 @@ class WeatherClient {
     // Example URL: https://api.open-meteo.com/v1/forecast?latitude=40.71&longitude=-74.01&current_weather=true
     //
     // Hint: Use URLSearchParams to build query parameters
-    throw new Error('Not implemented');
+    if(latitude < -90 || latitude > 90) {
+      throw new Error("invalid latitude")
+    } 
+    if(longitude < -180 || longitude > 180) {
+      throw new Error("invalid longitude")
+    }
+    const weatherFullURL = this.weatherBaseURL + `?latitude=${latitude}&longitude=${longitude}&current_weather=true`
+    const data: any = await this.request(weatherFullURL)
+    const currentWeather = {
+      temperature: data.current_weather.temperature,
+      windspeed: data.current_weather.windspeed,
+      winddirection: data.current_weather.winddirection,
+      weathercode: data.current_weather.weathercode,
+      time: data.current_weather.time,
+    }
+    return currentWeather
   }
 
   /**
@@ -91,7 +110,32 @@ class WeatherClient {
     // 6. Return the forecast data
     //
     // Example URL: https://api.open-meteo.com/v1/forecast?latitude=40.71&longitude=-74.01&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&forecast_days=7&timezone=auto
-    throw new Error('Not implemented');
+    if(latitude < -90 || latitude > 90) {
+      throw new Error("invalid latitude")
+    } 
+    if(longitude < -180 || longitude > 180) {
+      throw new Error("invalid longitude")
+    }
+    if(days > 16) {
+      throw new Error("too many days")
+    }
+    const params = new URLSearchParams()
+    params.append('latitude', String(latitude))
+    params.append('longitude', String(longitude)) 
+    params.append('daily', 'temperature_2m_max,temperature_2m_min,precipitation_sum')
+    params.append('forecast_days', String(days))
+    params.append('timezone', 'auto')
+    const fullForecastURL = this.weatherBaseURL + "?" + String(params) 
+    const forecastData: any = await this.request(fullForecastURL) 
+    const forecast= {
+      time: forecastData.daily.time,
+      temperature_2m_max: forecastData.daily.temperature_2m_max,
+      temperature_2m_min: forecastData.daily.temperature_2m_min,
+      precipitation_sum: forecastData.daily.precipitation_sum
+    }
+    return {
+      daily: forecast
+    }
   }
 
   /**
@@ -113,7 +157,22 @@ class WeatherClient {
     // Example URL: https://geocoding-api.open-meteo.com/v1/search?name=New%20York&count=1
     //
     // Hint: URL-encode the city name using encodeURIComponent()
-    throw new Error('Not implemented');
+    if(!cityName) {
+      throw new Error("empty city name")
+    }
+    const params = new URLSearchParams() 
+    params.append('name', cityName)
+    params.append('count', "1")
+    const fullSearchCityURL = this.geocodingBaseURL + "?" + params.toString()
+    //console.log(fullSearchCityURL)
+    const cityData: any = await this.request(fullSearchCityURL)
+    //console.log(cityData)
+    if(cityData.length < 1) {
+      return null
+    } else {
+      return cityData.results[0] 
+    }
+
   }
 }
 
