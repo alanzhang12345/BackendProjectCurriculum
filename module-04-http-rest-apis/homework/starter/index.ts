@@ -116,7 +116,7 @@ class WeatherClient {
     if(longitude < -180 || longitude > 180) {
       throw new Error("invalid longitude")
     }
-    if(days > 16) {
+    if(days > 16 || days < 1) {
       throw new Error("too many days")
     }
     const params = new URLSearchParams()
@@ -167,7 +167,7 @@ class WeatherClient {
     //console.log(fullSearchCityURL)
     const cityData: any = await this.request(fullSearchCityURL)
     //console.log(cityData)
-    if(cityData.length < 1) {
+    if(!cityData.results || cityData.results.length < 1) {
       return null
     } else {
       return cityData.results[0] 
@@ -253,3 +253,6 @@ async function main() {
 
 // Run the tests
 main().catch(console.error);
+
+export {WeatherClient}
+

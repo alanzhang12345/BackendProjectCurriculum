@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WeatherClient = void 0;
 /**
  * WeatherClient class for interacting with the Open-Meteo API
  */
@@ -148,7 +149,7 @@ var WeatherClient = /** @class */ (function () {
                         if (longitude < -180 || longitude > 180) {
                             throw new Error("invalid longitude");
                         }
-                        if (days > 16) {
+                        if (days > 16 || days < 1) {
                             throw new Error("too many days");
                         }
                         params = new URLSearchParams();
@@ -211,7 +212,7 @@ var WeatherClient = /** @class */ (function () {
                     case 1:
                         cityData = _a.sent();
                         //console.log(cityData)
-                        if (cityData.length < 1) {
+                        if (!cityData.results || cityData.results.length < 1) {
                             return [2 /*return*/, null];
                         }
                         else {
@@ -224,6 +225,7 @@ var WeatherClient = /** @class */ (function () {
     };
     return WeatherClient;
 }());
+exports.WeatherClient = WeatherClient;
 // Test function to verify your implementation
 function main() {
     return __awaiter(this, void 0, void 0, function () {
